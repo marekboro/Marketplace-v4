@@ -21,6 +21,20 @@ namespace Marketplace_v4.Controllers
             return data.GetProduct(id);
 
         }
+
+        [HttpPut("product/{id}")]
+
+        public ActionResult<Product> UpdateProduct(int id, Product product) {
+            Data data = new Data();
+            Product toUpdate = data.GetProduct(id);
+            // toUpdate.Name = product.Name;   
+            //  toUpdate.Price = product.Price;
+            toUpdate.Name = !String.IsNullOrEmpty(product.Name) ? product.Name : toUpdate.Name;
+            toUpdate.Price = !String.IsNullOrEmpty(product.Price) ? product.Price : toUpdate.Price;
+
+            return data.Update(id, toUpdate);
+
+        }
     }
 }
 
