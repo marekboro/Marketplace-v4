@@ -24,7 +24,8 @@ namespace Marketplace_v4.Controllers
 
         [HttpPut("product/{id}")]
 
-        public ActionResult<Product> UpdateProduct(int id, Product product) {
+        public ActionResult<Product> UpdateProduct(int id, Product product)
+        {
             Data data = new Data();
             Product toUpdate = data.GetProduct(id);
             // toUpdate.Name = product.Name;   
@@ -34,6 +35,15 @@ namespace Marketplace_v4.Controllers
 
             return data.Update(id, toUpdate);
 
+        }
+
+        [HttpDelete("product/{id}")]
+
+        public ActionResult DeleteProduct(int id)
+        {
+            Data data = new Data();
+            data.Delete(id);
+            return new EmptyResult();
         }
     }
 }
