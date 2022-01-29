@@ -3,11 +3,11 @@
     public class Product
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name {get; set; }
 
-        public int Price    { get; set; }
+        public string Price    { get; set; }
 
-        public Product(int id, string name, int price)
+        public Product(int id, string name, string price)
         {
             this.Id = id;
             this.Name = name;

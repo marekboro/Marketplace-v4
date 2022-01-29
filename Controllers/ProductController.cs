@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Marketplace_v4.Models;
+using Marketplace_v4.DataAccess;
 namespace Marketplace_v4.Controllers
 {
     [ApiController]
@@ -33,14 +34,17 @@ namespace Marketplace_v4.Controllers
         [HttpGet("products")]
         public IEnumerable<Product> GetAllProducts() {
 
-            return Enumerable.Range(1, 5).Select(index => new Product
-            (
-                 Random.Shared.Next(-20, 55),
-                $"Name{Random.Shared.Next(-20, 55)}",
-               Random.Shared.Next(-20, 55)
-                
-            ))
-            .ToArray();
+            //return Enumerable.Range(1, 5).Select(index => new Product
+            //(
+            //     Random.Shared.Next(-20, 55),
+            //    $"Name{Random.Shared.Next(-20, 55)}",
+            //   Random.Shared.Next(-20, 55)
+
+            //))
+            //.ToArray();
+
+            Data data = new Data();
+            return data.GetProducts().ToArray();
 
         }
     }
