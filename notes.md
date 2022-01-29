@@ -1,2 +1,3 @@
 ﻿- To get data, install MySql
-- need MySqlConnector, installed 2.1.4
+- needed MySqlConnector, installed 2.1.4
+- 

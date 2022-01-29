@@ -45,6 +45,17 @@ namespace Marketplace_v4.Controllers
             data.Delete(id);
             return new EmptyResult();
         }
+
+        [HttpPost("product")]
+        public Product CreateProduct(Product product) {
+            Data data = new Data();
+
+            int productAddedId = data.AddProduct(product);
+            Product returned = data.GetProduct(productAddedId);
+            return returned;
+        }
+
+
     }
 }
 

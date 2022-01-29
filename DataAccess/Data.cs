@@ -46,7 +46,6 @@ namespace Marketplace_v4.DataAccess
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
 
-
             return product;
 
         }
@@ -94,8 +93,28 @@ namespace Marketplace_v4.DataAccess
         }
 
         public int AddProduct(Product product) {
+            int toReturn = -1;
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            string query = "INSERT INTO products (Name, Price) VALUES(@Name, @Price)";
+            MySqlCommand command = new MySqlCommand(query, connection);
 
-            return 4;
+            command.Parameters.Add("@Price", MySqlDbType.VarChar).Value = product.Price;
+            command.Parameters.Add("@Name", MySqlDbType.VarChar).Value = product.Name; ;
+
+            try
+            {
+                connection.Open();
+                command.ExecuteNonQuery();
+                toReturn = (int)command.LastInsertedId;
+                connection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+            return toReturn;
         }
 
 
