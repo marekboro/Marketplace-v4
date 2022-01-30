@@ -18,25 +18,25 @@ namespace Marketplace_v4.DataAccess
             var query = "SELECT * FROM products";
             var command = new MySqlCommand(query, connection);
             var reader = command.ExecuteReader();
-            List<Product> Products = new List<Product>();
+            var products = new List<Product>();
             while (reader.Read())
             {
                 var p = new Product((int)reader["productId"], (string)reader["Name"], (string)reader["Price"]);
-                Products.Add(p);
+                products.Add(p);
             }
             connection.Close();
-            return Products;
+            return products;
 
         }
 
-        public Product GetProduct(int id)
+        public Product? GetProduct(int id)
         {
             var connection = new MySqlConnection(connectionString);
             var query = "SELECT * FROM products WHERE productId = @ID";
             var command = new MySqlCommand(query, connection);
             command.Parameters.Add("@ID", MySqlDbType.Int32).Value = id;
             
-            Product product = null;
+            Product? product = null;
             try {
                 connection.Open();
                 var reader = command.ExecuteReader();
@@ -50,15 +50,19 @@ namespace Marketplace_v4.DataAccess
 
         }
 
-        public Product Update(int id, Product product)
+        //public Product? Update(int id, Product product)
+        public Product Update(Product product)
         {
-            Product updatdedProduct = null;
+
+            //var exiting = _data.ge
+            Product? updatedProduct = null;
             var connection = new MySqlConnection(connectionString);
 
             var query = "UPDATE `igs`.`products` SET `Name` = @Name, `Price` = @Price WHERE (`productId` = @ID)";
             var command = new MySqlCommand(query, connection);
             command.Parameters.Add("@Price", MySqlDbType.VarChar).Value = product.Price;
-            command.Parameters.Add("@ID", MySqlDbType.Int32).Value = id;
+            // command.Parameters.Add("@ID", MySqlDbType.Int32).Value = id;
+            command.Parameters.Add("@ID", MySqlDbType.Int32).Value = product.productId;
             command.Parameters.Add("@Name", MySqlDbType.VarChar).Value = product.Name;
        
             
@@ -67,14 +71,15 @@ namespace Marketplace_v4.DataAccess
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
-                updatdedProduct = GetProduct(id);
+               // updatedProduct = GetProduct(id);
+                updatedProduct = GetProduct(product.productId);
             }
 
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            return updatdedProduct;
+            return updatedProduct;
         }
 
         
