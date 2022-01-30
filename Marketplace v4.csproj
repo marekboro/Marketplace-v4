@@ -11,7 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="tests.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="DataAccess\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="tests.json" />
   </ItemGroup>
 
   <ItemGroup>
