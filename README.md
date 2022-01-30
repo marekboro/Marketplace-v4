@@ -9,7 +9,7 @@
 5. To test in postman, import tests.json found in root, into postman. 
 
 ##### Having more time I would have liked to implement:
- - implement a restriction on the Price being a string that needs to be passable as an int.
+ - A restriction on the Price being a string that needs to be passable as an int.
  - Containerising the app in Docker
- - adding a scrip runner that would use the sql script to recreate the database for testing purposes
- - having different tables being used depending on IsDevelopment value. 
+ - Adding a scrip runner that would use the sql script to recreate the database for testing purposes on app start.
+ - Having different tables being used depending on IsDevelopment value. 
