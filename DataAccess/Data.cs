@@ -62,7 +62,7 @@ namespace Marketplace_v4.DataAccess
             var command = new MySqlCommand(query, connection);
             command.Parameters.Add("@Price", MySqlDbType.VarChar).Value = product.Price;
             // command.Parameters.Add("@ID", MySqlDbType.Int32).Value = id;
-            command.Parameters.Add("@ID", MySqlDbType.Int32).Value = product.productId;
+            command.Parameters.Add("@ID", MySqlDbType.Int32).Value = product.id;
             command.Parameters.Add("@Name", MySqlDbType.VarChar).Value = product.Name;
        
             
@@ -72,7 +72,7 @@ namespace Marketplace_v4.DataAccess
                 command.ExecuteNonQuery();
                 connection.Close();
                // updatedProduct = GetProduct(id);
-                updatedProduct = GetProduct(product.productId);
+                updatedProduct = GetProduct(product.id);
             }
 
             catch (Exception e)

@@ -1,10 +1,15 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Marketplace_v4.Models
 {
     public class Product
     {
         [JsonProperty("productId")]
-        public int productId { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int id { get; set; }
         [JsonProperty("Name")]
         public string? Name {get; set; }
         [JsonProperty("Price")]
@@ -12,10 +17,15 @@ namespace Marketplace_v4.Models
 
         public Product(int id, string name, string price)
         {
-            productId = id;
+            this.id = id;
             Name =  !string.IsNullOrEmpty(name) ? name : "";
             Price = !string.IsNullOrEmpty(price) ? price : "";
         }
+
+
+
+
+
         public Product() { } // required for instantiating with sql queries. 
     }
 }
