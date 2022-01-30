@@ -18,18 +18,26 @@ namespace Marketplace_v4.Controllers
         public ActionResult<Product> GetProduct(int id)
         {
             Data data = new Data();
-            return data.GetProduct(id);
+            Product product = data.GetProduct(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return product;
 
         }
 
         [HttpPut("product/{id}")]
 
-        public ActionResult<Product> UpdateProduct(int id, Product product)
+        public ActionResult<Product> UpdateProduct(int id, [FromForm] Product product)
         {
             Data data = new Data();
             Product toUpdate = data.GetProduct(id);
-            // toUpdate.Name = product.Name;   
-            //  toUpdate.Price = product.Price;
+            if (toUpdate == null)
+            {
+                return NotFound();
+            }
+
             toUpdate.Name = !String.IsNullOrEmpty(product.Name) ? product.Name : toUpdate.Name;
             toUpdate.Price = !String.IsNullOrEmpty(product.Price) ? product.Price : toUpdate.Price;
 
@@ -37,17 +45,26 @@ namespace Marketplace_v4.Controllers
 
         }
 
+
+
         [HttpDelete("product/{id}")]
 
         public ActionResult DeleteProduct(int id)
         {
             Data data = new Data();
+            Product toDelete = data.GetProduct(id);
+            if (toDelete == null)
+            {
+                return NotFound();
+            }
+
             data.Delete(id);
             return new EmptyResult();
         }
 
         [HttpPost("product")]
-        public Product CreateProduct(Product product) {
+        public Product CreateProduct([FromForm]Product product)
+        {
             Data data = new Data();
 
             int productAddedId = data.AddProduct(product);

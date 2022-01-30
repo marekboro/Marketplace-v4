@@ -52,6 +52,7 @@ namespace Marketplace_v4.DataAccess
 
         public Product Update(int id, Product product)
         {
+            Product updatdedProduct = null;
             MySqlConnection connection = new MySqlConnection(connectionString);
 
             string query = "UPDATE `igs`.`products` SET `Name` = @Name, `Price` = @Price WHERE (`productId` = @ID)";
@@ -60,7 +61,7 @@ namespace Marketplace_v4.DataAccess
             command.Parameters.Add("@ID", MySqlDbType.Int32).Value = id;
             command.Parameters.Add("@Name", MySqlDbType.VarChar).Value = product.Name;
        
-            Product updatdedProduct = null;
+            
             try
             {
                 connection.Open();
@@ -75,6 +76,8 @@ namespace Marketplace_v4.DataAccess
             }
             return updatdedProduct;
         }
+
+        
 
         public void Delete(int id) {
             MySqlConnection connection = new MySqlConnection(connectionString);
