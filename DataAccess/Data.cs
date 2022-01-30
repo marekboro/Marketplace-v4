@@ -6,22 +6,22 @@ namespace Marketplace_v4.DataAccess
     public class Data
     {
 
-        public Data() { }
+        //public Data() { }
 
         string connectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("ConnectionStrings")["Default"];
         public List<Product> GetProducts()
         {
 
-            
-            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            var connection = new MySqlConnection(connectionString);
             connection.Open();
-            string query = "SELECT * FROM products";
-            MySqlCommand command = new MySqlCommand(query, connection);
-            MySqlDataReader reader = command.ExecuteReader();
+            var query = "SELECT * FROM products";
+            var command = new MySqlCommand(query, connection);
+            var reader = command.ExecuteReader();
             List<Product> Products = new List<Product>();
             while (reader.Read())
             {
-                Product p = new Product((int)reader["productId"], (string)reader["Name"], (string)reader["Price"]);
+                var p = new Product((int)reader["productId"], (string)reader["Name"], (string)reader["Price"]);
                 Products.Add(p);
             }
             connection.Close();
@@ -31,15 +31,15 @@ namespace Marketplace_v4.DataAccess
 
         public Product GetProduct(int id)
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            string query = "SELECT * FROM products WHERE productId = @ID";
-            MySqlCommand command = new MySqlCommand(query, connection);
+            var connection = new MySqlConnection(connectionString);
+            var query = "SELECT * FROM products WHERE productId = @ID";
+            var command = new MySqlCommand(query, connection);
             command.Parameters.Add("@ID", MySqlDbType.Int32).Value = id;
             
             Product product = null;
             try {
                 connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                var reader = command.ExecuteReader();
                 reader.Read();
                 product = new Product((int)reader["productId"], (string)reader["Name"], (string)reader["Price"]);
                 connection.Close();
@@ -53,10 +53,10 @@ namespace Marketplace_v4.DataAccess
         public Product Update(int id, Product product)
         {
             Product updatdedProduct = null;
-            MySqlConnection connection = new MySqlConnection(connectionString);
+            var connection = new MySqlConnection(connectionString);
 
-            string query = "UPDATE `igs`.`products` SET `Name` = @Name, `Price` = @Price WHERE (`productId` = @ID)";
-            MySqlCommand command = new MySqlCommand(query, connection);
+            var query = "UPDATE `igs`.`products` SET `Name` = @Name, `Price` = @Price WHERE (`productId` = @ID)";
+            var command = new MySqlCommand(query, connection);
             command.Parameters.Add("@Price", MySqlDbType.VarChar).Value = product.Price;
             command.Parameters.Add("@ID", MySqlDbType.Int32).Value = id;
             command.Parameters.Add("@Name", MySqlDbType.VarChar).Value = product.Name;
@@ -80,9 +80,9 @@ namespace Marketplace_v4.DataAccess
         
 
         public void Delete(int id) {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            string query = "DELETE FROM products WHERE productId = @ID";
-            MySqlCommand command = new MySqlCommand(query, connection);
+            var connection = new MySqlConnection(connectionString);
+            var query = "DELETE FROM products WHERE productId = @ID";
+            var command = new MySqlCommand(query, connection);
 
             command.Parameters.Add("@ID", MySqlDbType.Int32).Value = id;
             try {
@@ -96,10 +96,10 @@ namespace Marketplace_v4.DataAccess
         }
 
         public int AddProduct(Product product) {
-            int toReturn = -1;
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            string query = "INSERT INTO products (Name, Price) VALUES(@Name, @Price)";
-            MySqlCommand command = new MySqlCommand(query, connection);
+            var toReturn = -1;
+            var connection = new MySqlConnection(connectionString);
+            var query = "INSERT INTO products (Name, Price) VALUES(@Name, @Price)";
+            var command = new MySqlCommand(query, connection);
 
             command.Parameters.Add("@Price", MySqlDbType.VarChar).Value = product.Price;
             command.Parameters.Add("@Name", MySqlDbType.VarChar).Value = product.Name; ;
