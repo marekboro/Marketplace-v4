@@ -4,7 +4,6 @@ namespace Marketplace_v4.Models
 {
     public class ProductContext : DbContext
     {
-
         public ProductContext(DbContextOptions<ProductContext> options) : base(options) 
         { 
         }
